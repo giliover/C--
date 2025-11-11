@@ -13,17 +13,17 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 
 <declaraçõeslista> → <declaraçõeslista> <declarações> | <declarações>
 
-<declarações> → <declaraçãovar > | <declaração func>
+<declarações> → <declaraçãovar > | <func>
 
 <declaraçãovar> → <tipo> ident; | <tipo> ident [contint];
 
 <tipo > → int | void
 
-<declaração func> → <tipo > ident (<parformais>) <declcomposto>
+<func> → <tipo > ident (<parformais>) <declcomposto>
 
 <parformais> → <listaparformais> | ε
 
-<listaparformais> → <parametro>, <listaparformais > | <parametro>
+<listaparformais> → <parametro>, <listaparformais> | <parametro>
 
 <parametro> → <tipo> ident | <tipo> ident []
 
@@ -31,7 +31,7 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 
 <declaraçõeslocais> → <declaraçõeslocais> <declaraçãovar | ε
 
-<lista de comandos> → <comando> <lista de comandos> | ε
+<listadecomandos> → <comando> <listadecomandos> | ε
 
 <comando> → <comandoexpressão> | <comandocomposto > | <comandoseleção > | <comandoiteração > | <comando retorno>
 
@@ -43,19 +43,19 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 
 <comando retorno> → return; | return <expressão>);
 
-<comandocomposto > → { <lista de comandos> }
+<comandocomposto > → { <listadecomandos> }
 
 <expressão> → <var> = <expressão> | <expressãosimples>
 
 <var> → ident | ident [ <expressão> ]
 
-<expressãosimples> → <expressõessoma> <op relacional> <expressõessoma> | <expressõessoma>
+<expressãosimples> → <expressõessoma> <oprelacional> <expressõessoma> | <expressõessoma>
 
-<op relacional> → > | < | <= | >= | == | !=
+<oprelacional> → > | < | <= | >= | == | !=
 
-<expressõessoma> → <expressõessoma > <op aditivo> <termo> | <termo>
+<expressõessoma> → <expressõessoma> <opaditivo> <termo> | <termo>
 
-<op aditivo> → + | -
+<opaditivo> → + | -
 
 <termo> → <termo> <opmult> <fator> | <fator>
 
