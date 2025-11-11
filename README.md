@@ -65,7 +65,7 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 
 <ativação> → ident (<args> )
 
-<args> → <args-lista > | ε
+<args> → <argslista > | ε
 
-<args-lista > → <args-lista>, <expressão> | <expressão>
+<argslista > → <argslista>, <expressão> | <expressão>
 ```
