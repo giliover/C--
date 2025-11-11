@@ -8,58 +8,58 @@ Este repositório contém a implementação de um analisador sintático para a l
 
 Esta é a gramática original fornecida para o projeto. Ela contém recursões à esquerda e ambiguidades (como a de `if-else` e a de regras que iniciam com `ident`), o que a torna inadequada para um analisador descendente recursivo (LL(1)) direto.
 
-```ebnf
-<programa> → <declarações lista>
+```
+<programa> → <declaraçõeslista>
 
-< declarações lista > → < declarações lista> <declarações> | <declarações>
+<declaraçõeslista> → <declaraçõeslista> <declarações> | <declarações>
 
-<declarações> → < declaração var > | < declaração func>
+<declarações> → <declaraçãovar > | <declaração func>
 
-< declaração var> → <tipo> ident; | <tipo> ident [contint];
+<declaraçãovar> → <tipo> ident; | <tipo> ident [contint];
 
 <tipo > → int | void
 
-<declaração func> → <tipo > ident (<par formais>) <decl composto>
+<declaração func> → <tipo > ident (<parformais>) <declcomposto>
 
-< par formais> → < lista par formais > | ε
+<parformais> → <listaparformais> | ε
 
-< lista par formais > → <parametro>, < lista par formais > | < parametro >
+<listaparformais> → <parametro>, <listaparformais > | <parametro>
 
 <parametro> → <tipo> ident | <tipo> ident []
 
-<decl composto> → { <declarações locais> <lista comandos> }
+<declcomposto> → { <declaraçõeslocais> <lista comandos> }
 
-<declarações locais> → <declarações locais> < declaração var | ε
+<declaraçõeslocais> → <declaraçõeslocais> <declaraçãovar | ε
 
 <lista de comandos> → <comando> <lista de comandos> | ε
 
-<comando> → <comando expressão > | < comando composto > | <comando seleção > | <comando iteração > | <comando retorno>
+<comando> → <comandoexpressão> | <comandocomposto > | <comandoseleção > | <comandoiteração > | <comando retorno>
 
-< comando expressão > → <expressão>; | ;
+<comandoexpressão> → <expressão>; | ;
 
-<comando iteração > → while (<expressão>) <comando>
+<comandoiteração > → while (<expressão>) <comando>
 
-<comando seleção > → if (<expressão>) < comando> | If (<expressão>) < comando> else <comando>
+<comandoseleção > → if (<expressão>) <comando> | If (<expressão>) <comando> else <comando>
 
 <comando retorno> → return; | return <expressão>);
 
-< comando composto > → { <lista de comandos> }
+<comandocomposto > → { <lista de comandos> }
 
-<expressão> → <var> = <expressão> | <expressão simples>
+<expressão> → <var> = <expressão> | <expressãosimples>
 
 <var> → ident | ident [ <expressão> ]
 
-<expressão simples> → <expressões soma> < op relacional> <expressões soma> | <expressões soma>
+<expressãosimples> → <expressõessoma> <op relacional> <expressõessoma> | <expressõessoma>
 
 <op relacional> → > | < | <= | >= | == | !=
 
-<expressões soma> → <expressões soma > <op aditivo> <termo> | <termo>
+<expressõessoma> → <expressõessoma > <op aditivo> <termo> | <termo>
 
 <op aditivo> → + | -
 
-<termo> → <termo> <op mult> <fator> | <fator>
+<termo> → <termo> <opmult> <fator> | <fator>
 
-<op mult> → * | / (Nota: fonte 56 é "1/")
+<opmult> → * | / 
 
 <fator> → (<expressão>) | <var> | <ativação> | contint
 
@@ -68,3 +68,4 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 <args> → <args-lista > | ε
 
 <args-lista > → <args-lista>, <expressão> | <expressão>
+```
