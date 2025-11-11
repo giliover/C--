@@ -69,3 +69,88 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 
 <argslista > → <argslista>, <expressão> | <expressão>
 ```
+
+## Parte 2: Gramática Refatorada para LL(1)
+
+Abaixo está a gramática original modificada para ser compatível com um parser LL(1). As duas técnicas principais aplicadas foram:
+
+1.  **Eliminação de Recursão à Esquerda:** Regras na forma `A → A α | β` foram convertidas para `A → β A'` e `A' → α A' | ε` (representadas no parser como um loop `while`).
+2.  **Fatoração à Esquerda:** Regras na forma `A → α β | α γ` foram fatoradas para `A → α A'` e `A' → β | γ` (representadas no parser como um `if` ou `switch` para decidir o caminho).
+
+```
+<programa> → <declaraçõeslista>
+
+<declaraçõeslista> → <declarações> <declaraçõeslista'>
+<declaraçõeslista'> → <declarações> <declaraçõeslista'> | ε
+
+<declarações> → <tipo> ident <declarações'>
+<declarações'> → ; | [contint]; | (<parformais>) <declcomposto>
+
+<declaraçãovar> → <tipo> ident <declaraçãovar'>
+<declaraçãovar'> → ; | [contint];
+
+<tipo > → int | void
+
+<parformais> → <listaparformais> | ε
+
+<listaparformais> → <parametro> <listaparformais'>
+<listaparformais'> → , <listaparformais> | ε
+
+<parametro> → <tipo> ident <parametro'>
+<parametro'> → [] | ε
+
+<declcomposto> → { <declaraçõeslocais> <listadecomandos> }
+
+<declaraçõeslocais> → <declaraçãovar> <declaraçõeslocais> | ε
+
+<listadecomandos> → <comando> <listadecomandos> | ε
+
+<comando> → <comandoexpressão> | <comandocomposto > | <comandoseleção > | <comandoiteração > | <comando retorno>
+
+<comandoexpressão> → <expressão>; | ;
+
+<comandoiteração > → while (<expressão>) <comando>
+
+<comandoseleção> → if (<expressão>) <comando> <comandoseleção'>
+<comandoseleção'> → else <comando> | ε
+
+<comando retorno> → return <comando retorno'>
+<comando retorno'> → ; | <expressão>;
+
+<comandocomposto > → { <listadecomandos> }
+
+<expressão> → ( <expressão> ) <termo'> <expressõessoma'> <expressãosimples'>
+| contint <termo'> <expressõessoma'> <expressãosimples'>
+| ident <expressão_ident'>
+
+<expressão_ident'> → = <expressão>
+| [ <expressão> ] <expressão_ident_colchete'>
+| ( <args> ) <termo'> <expressõessoma'> <expressãosimples'>
+| <termo'> <expressõessoma'> <expressãosimples'>
+
+<expressão_ident_colchete'> → = <expressão>
+| <termo'> <expressõessoma'> <expressãosimples'>
+
+<expressãosimples> → <expressõessoma> <expressãosimples'>
+<expressãosimples'> → <oprelacional> <expressõessoma> | ε
+
+<oprelacional> → > | < | <= | >= | == | !=
+
+<expressõessoma> → <termo> <expressõessoma'>
+<expressõessoma'> → <opaditivo> <termo> <expressõessoma'> | ε
+
+<opaditivo> → + | -
+
+<termo> → <fator> <termo'>
+<termo'> → <opmult> <fator> <termo'> | ε
+
+<opmult> → * | /
+
+<fator> → (<expressão>) | contint | ident <fatorident'>
+<fatorident'> → [ <expressão> ] | ( <args> ) | ε
+
+<args> → <argslista > | ε
+
+<argslista> → <expressão> <argslista'>
+<argslista'> → , <expressão> <argslista'> | ε
+```
