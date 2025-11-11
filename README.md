@@ -13,13 +13,13 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 
 <declaraçõeslista> → <declaraçõeslista> <declarações> | <declarações>
 
-<declarações> → <declaraçãovar > | <func>
+<declarações> → <declaraçãovar> | <func>
 
 <declaraçãovar> → <tipo> ident; | <tipo> ident [contint];
 
-<tipo > → int | void
+<tipo> → int | void
 
-<func> → <tipo > ident (<parformais>) <declcomposto>
+<func> → <tipo> ident (<parformais>) <declcomposto>
 
 <parformais> → <listaparformais> | ε
 
@@ -29,21 +29,21 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 
 <declcomposto> → { <declaraçõeslocais> <lista comandos> }
 
-<declaraçõeslocais> → <declaraçõeslocais> <declaraçãovar | ε
+<declaraçõeslocais> → <declaraçõeslocais> <declaraçãovar> | ε
 
 <listadecomandos> → <comando> <listadecomandos> | ε
 
-<comando> → <comandoexpressão> | <comandocomposto > | <comandoseleção > | <comandoiteração > | <comando retorno>
+<comando> → <comandoexpressão> | <comandocomposto> | <comandoseleção> | <comandoiteração> | <comandoretorno>
 
 <comandoexpressão> → <expressão>; | ;
 
-<comandoiteração > → while (<expressão>) <comando>
+<comandoiteração> → while (<expressão>) <comando>
 
-<comandoseleção > → if (<expressão>) <comando> | If (<expressão>) <comando> else <comando>
+<comandoseleção> → if (<expressão>) <comando> | If (<expressão>) <comando> else <comando>
 
-<comando retorno> → return; | return <expressão>);
+<comandoretorno> → return; | return <expressão>;
 
-<comandocomposto > → { <listadecomandos> }
+<comandocomposto> → { <listadecomandos> }
 
 <expressão> → <var> = <expressão> | <expressãosimples>
 
@@ -65,9 +65,9 @@ Esta é a gramática original fornecida para o projeto. Ela contém recursões �
 
 <ativação> → ident (<args> )
 
-<args> → <argslista > | ε
+<args> → <argslista> | ε
 
-<argslista > → <argslista>, <expressão> | <expressão>
+<argslista> → <argslista>, <expressão> | <expressão>
 ```
 
 ## Parte 2: Gramática Refatorada para LL(1)
@@ -89,7 +89,7 @@ Abaixo está a gramática original modificada para ser compatível com um parser
 <declaraçãovar> → <tipo> ident <declaraçãovar'>
 <declaraçãovar'> → ; | [contint];
 
-<tipo > → int | void
+<tipo> → int | void
 
 <parformais> → <listaparformais> | ε
 
@@ -105,30 +105,30 @@ Abaixo está a gramática original modificada para ser compatível com um parser
 
 <listadecomandos> → <comando> <listadecomandos> | ε
 
-<comando> → <comandoexpressão> | <comandocomposto > | <comandoseleção > | <comandoiteração > | <comando retorno>
+<comando> → <comandoexpressão> | <comandocomposto> | <comandoseleção> | <comandoiteração> | <comandoretorno>
 
 <comandoexpressão> → <expressão>; | ;
 
-<comandoiteração > → while (<expressão>) <comando>
+<comandoiteração> → while (<expressão>) <comando>
 
 <comandoseleção> → if (<expressão>) <comando> <comandoseleção'>
 <comandoseleção'> → else <comando> | ε
 
-<comando retorno> → return <comando retorno'>
-<comando retorno'> → ; | <expressão>;
+<comandoretorno> → return <comandoretorno'>
+<comandoretorno'> → ; | <expressão>;
 
-<comandocomposto > → { <listadecomandos> }
+<comandocomposto> → { <listadecomandos> }
 
 <expressão> → ( <expressão> ) <termo'> <expressõessoma'> <expressãosimples'>
 | contint <termo'> <expressõessoma'> <expressãosimples'>
-| ident <expressão_ident'>
+| ident <expressãoident'>
 
-<expressão_ident'> → = <expressão>
-| [ <expressão> ] <expressão_ident_colchete'>
+<expressãoident'> → = <expressão>
+| [ <expressão> ] <expressãoidentcolchete'>
 | ( <args> ) <termo'> <expressõessoma'> <expressãosimples'>
 | <termo'> <expressõessoma'> <expressãosimples'>
 
-<expressão_ident_colchete'> → = <expressão>
+<expressãoidentcolchete'> → = <expressão>
 | <termo'> <expressõessoma'> <expressãosimples'>
 
 <expressãosimples> → <expressõessoma> <expressãosimples'>
@@ -149,7 +149,7 @@ Abaixo está a gramática original modificada para ser compatível com um parser
 <fator> → (<expressão>) | contint | ident <fatorident'>
 <fatorident'> → [ <expressão> ] | ( <args> ) | ε
 
-<args> → <argslista > | ε
+<args> → <argslista> | ε
 
 <argslista> → <expressão> <argslista'>
 <argslista'> → , <expressão> <argslista'> | ε
